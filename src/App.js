@@ -1,6 +1,9 @@
 import React from 'react';
 import logo from './logo.svg';
+import Loader from 'react-loader-spinner';
 import './App.css';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+
 
 class App extends React.Component{
   state = {
@@ -3794,14 +3797,19 @@ class App extends React.Component{
     selectedCandidateCode: '',
     selectedCandidate: '',
     selectedCycle: '',
+    displayedCycle: '',
     selectedIndustry: '',
     dollarAmount: '',
     selectedIndustryName: '',
     errorMessage: '',
+    requestCompleted: false,
+    isLoading: false,
   }
 
 getIndustryContribs = () => {
   const url = `https://www.opensecrets.org/api/?method=candIndByInd&cid=${this.state.selectedCandidateCode}&cycle=${this.state.selectedCycle}&ind=${this.state.selectedIndustry}&output=json&apikey=d0d4a0bf9a8a46c580d807195076a953`
+
+  this.setState({ isLoading: true })
   
   return fetch(url).then(response => {
     console.log(response);
@@ -3814,10 +3822,16 @@ getIndustryContribs = () => {
         this.setState({ selectedCandidate: data.response.candIndus['@attributes'].cand_name.split(',').reverse().join(' ')});
         this.setState({ dollarAmount: data.response.candIndus['@attributes'].total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")});
         this.setState({ selectedIndustryName: data.response.candIndus['@attributes'].industry});
+        this.setState({ errorMessage: '' })
+        this.setState({ requestCompleted:true });
+        this.setState({ isLoading: false });
+        this.setState({ displayedCycle: this.state.selectedCycle })
       })
       
     }).catch(err => {
-      this.setState({ errorMessage: err.toString() })
+      this.setState({ errorMessage: err.toString() });
+      this.setState({ requestCompleted:true });
+      this.setState({ isLoading: false });
     })
 }
     
@@ -3826,11 +3840,19 @@ getIndustryContribs = () => {
 
 render() {
   let result;
-  if (this.state.selectedCandidate) {
-  result = <p>During the {this.state.selectedCycle} cycle, {this.state.selectedCandidate} received ${this.state.dollarAmount} from the {this.state.selectedIndustryName} industry</p>
-} else {
-result = <p>{this.state.errorMessage}</p>
-}
+
+  if (!this.state.errorMessage && this.state.requestCompleted && !this.state.isLoading) {
+  result = <p>During the {this.state.displayedCycle} cycle, {this.state.selectedCandidate} received ${this.state.dollarAmount} from the {this.state.selectedIndustryName} industry</p>
+
+  } else if (this.state.isLoading) {
+    result = <Loader type="ThreeDots" color="#000000" height={80} width={80} />
+  } 
+
+  else {
+  result = <p>{this.state.errorMessage}</p> 
+  }
+
+ 
 
 
   return (
@@ -3868,7 +3890,6 @@ result = <p>{this.state.errorMessage}</p>
       </select>
 
     <button onClick={this.getIndustryContribs}>Get contributions</button>
-
         <div>{result}</div>
         
     </div>

@@ -1,23 +1,26 @@
 {
   "files": {
-    "main.css": "/industry-contributions/static/css/main.5f361e03.chunk.css",
-    "main.js": "/industry-contributions/static/js/main.dedca4e3.chunk.js",
-    "main.js.map": "/industry-contributions/static/js/main.dedca4e3.chunk.js.map",
+    "main.css": "/industry-contributions/static/css/main.466e13cf.chunk.css",
+    "main.js": "/industry-contributions/static/js/main.9a14bb43.chunk.js",
+    "main.js.map": "/industry-contributions/static/js/main.9a14bb43.chunk.js.map",
     "runtime-main.js": "/industry-contributions/static/js/runtime-main.3f111194.js",
     "runtime-main.js.map": "/industry-contributions/static/js/runtime-main.3f111194.js.map",
-    "static/js/2.da46dfa8.chunk.js": "/industry-contributions/static/js/2.da46dfa8.chunk.js",
-    "static/js/2.da46dfa8.chunk.js.map": "/industry-contributions/static/js/2.da46dfa8.chunk.js.map",
+    "static/css/2.f87e9f44.chunk.css": "/industry-contributions/static/css/2.f87e9f44.chunk.css",
+    "static/js/2.50eeb3c7.chunk.js": "/industry-contributions/static/js/2.50eeb3c7.chunk.js",
+    "static/js/2.50eeb3c7.chunk.js.map": "/industry-contributions/static/js/2.50eeb3c7.chunk.js.map",
     "index.html": "/industry-contributions/index.html",
-    "precache-manifest.85eda96a3250af0bc32abbbb33e17594.js": "/industry-contributions/precache-manifest.85eda96a3250af0bc32abbbb33e17594.js",
+    "precache-manifest.454146ba2f1bfb281840a48abeea5bf4.js": "/industry-contributions/precache-manifest.454146ba2f1bfb281840a48abeea5bf4.js",
     "service-worker.js": "/industry-contributions/service-worker.js",
-    "static/css/main.5f361e03.chunk.css.map": "/industry-contributions/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.da46dfa8.chunk.js.LICENSE.txt": "/industry-contributions/static/js/2.da46dfa8.chunk.js.LICENSE.txt",
+    "static/css/2.f87e9f44.chunk.css.map": "/industry-contributions/static/css/2.f87e9f44.chunk.css.map",
+    "static/css/main.466e13cf.chunk.css.map": "/industry-contributions/static/css/main.466e13cf.chunk.css.map",
+    "static/js/2.50eeb3c7.chunk.js.LICENSE.txt": "/industry-contributions/static/js/2.50eeb3c7.chunk.js.LICENSE.txt",
     "static/media/logo.svg": "/industry-contributions/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.3f111194.js",
-    "static/js/2.da46dfa8.chunk.js",
-    "static/css/main.5f361e03.chunk.css",
-    "static/js/main.dedca4e3.chunk.js"
+    "static/css/2.f87e9f44.chunk.css",
+    "static/js/2.50eeb3c7.chunk.js",
+    "static/css/main.466e13cf.chunk.css",
+    "static/js/main.9a14bb43.chunk.js"
   ]
 }

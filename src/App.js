@@ -3811,6 +3811,7 @@ getIndustryContribs = () => {
 
   this.setState({ isLoading: true })
   
+  //get data from the Open Secrets api
   return fetch(url).then(response => {
     console.log(response);
     if(!response.ok) {
@@ -3820,6 +3821,8 @@ getIndustryContribs = () => {
       .then(data => {
         console.log(data)
         this.setState({ selectedCandidate: data.response.candIndus['@attributes'].cand_name.split(',').reverse().join(' ')});
+
+        //Regular expression to store the contribution $$ in currency comma format
         this.setState({ dollarAmount: data.response.candIndus['@attributes'].total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")});
         this.setState({ selectedIndustryName: data.response.candIndus['@attributes'].industry});
         this.setState({ errorMessage: '' })
@@ -3839,10 +3842,13 @@ getIndustryContribs = () => {
   
 
 render() {
+  //Conditionally render the result of the query, a loading graphic, or an error message depending on the stage & result of the api
   let result;
+  let learnMore;
 
   if (!this.state.errorMessage && this.state.requestCompleted && !this.state.isLoading) {
   result = <p>During the {this.state.displayedCycle} cycle, {this.state.selectedCandidate} received ${this.state.dollarAmount} from the {this.state.selectedIndustryName} industry</p>
+  learnMore = <p>To learn more about this industry, click <a href={`https://www.opensecrets.org/federal-lobbying/industries/summary?id=${this.state.selectedIndustry}`}>here.</a></p>
 
   } else if (this.state.isLoading) {
     result = <Loader type="ThreeDots" color="#000000" height={80} width={80} />
@@ -3857,40 +3863,68 @@ render() {
 
   return (
     <div className="App">
-      <select 
-        value={this.state.selectedState} 
-        onChange={(e) => this.setState({selectedState: e.target.value})}>
-        {this.state.states.map((state) => 
-        <option key={state} value={state}>{state}</option>)}  
-      </select>
+      <div className="app-description">
+        <h2>Industry Money</h2>
+        <p>Use the dropdown menus below to find how much money a Congressmember of your choice has received from different industries in a given campaign cycle. All data is pulled from Open Secrets.</p>
+      </div>
 
+    <div className="form-wrapper">
+      <div className="dropdown-wrapper">
+        <p>1.Select State</p>
+        <select 
+          value={this.state.selectedState} 
+          onChange={(e) => this.setState({selectedState: e.target.value})}>
+          {this.state.states.map((state) => 
+          <option key={state} value={state}>{state}</option>)}  
+        </select>
+      </div>
+
+      <div className="dropdown-wrapper">
+      <p>2.Select Candidate</p>
       <select 
-        
+        //store the candidate selected by the user in the dropdown in the state & populate the dropdown menu with the filtered list of candidates based what state the user selected
         onChange={(e) => this.setState({selectedCandidateCode: e.target.value})}>
-          <option>Candidate...</option>
+          <option>Candidate...</option>   
         {this.state.candidates.filter((candidate) => candidate.State === this.state.selectedState).map((candidate) => 
-          <option key={candidate.CID} value={candidate.CID}>{candidate.CRPName}</option>)}
+          <option key={candidate.CID} value={candidate.CID}>{candidate.CRPName}</option>)} 
       </select>
+      </div>
 
-      <select
-      onChange={(e) => this.setState({selectedIndustry: e.target.value})}>
-        <option>Industry...</option>
-        {this.state.industries.map((industry) => 
-          <option key={industry.code} value={industry.code}>{industry.industry}</option>)}
-      </select>
+      <div className="dropdown-wrapper">
+      <p>3.Select Industry</p>
+        <select
+        //Store the industry code of the user-selected industry in the state. This value is then used to make the api call in the 'url' variable
+        onChange={(e) => this.setState({selectedIndustry: e.target.value})}>
+          <option>Industry...</option>
+          {this.state.industries.sort(function(a,b) {
+              var textA = a.industry.toLocaleLowerCase();
+              var textB = b.industry.toLocaleLowerCase();
+              return (textA < textB) ? -1 : (textA > textB) ? 1: 0;
+          }).map((industry) => 
+            <option key={industry.code} value={industry.code}>{industry.industry}</option>)}
+        </select>
+      </div>   
 
-      <select
-        onChange={(e) => this.setState({selectedCycle: e.target.value})}>
-          <option>Cycle...</option>
-          <option>2012</option>
-          <option>2014</option>
-          <option>2016</option>
-          <option>2018</option>
-          <option>2020</option>
-      </select>
+      <div className="dropdown-wrapper">
+      <p>4.Select Cycle</p>
+        <select
+        //store the user-selected cycle in the state, which is then used in the api call
+          onChange={(e) => this.setState({selectedCycle: e.target.value})}>
+            <option>Cycle...</option>
+            <option>2012</option>
+            <option>2014</option>
+            <option>2016</option>
+            <option>2018</option>
+            <option>2020</option>
+        </select>
+      </div>
 
+    
+    
+    </div>  
     <button onClick={this.getIndustryContribs}>Get contributions</button>
         <div>{result}</div>
+        <div>{learnMore}</div>
         
     </div>
   );

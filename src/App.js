@@ -3848,7 +3848,7 @@ render() {
 
   if (!this.state.errorMessage && this.state.requestCompleted && !this.state.isLoading) {
   result = <p>During the {this.state.displayedCycle} cycle, {this.state.selectedCandidate} received ${this.state.dollarAmount} from the {this.state.selectedIndustryName} industry</p>
-  learnMore = <p>To learn more about this industry, click <a href={`https://www.opensecrets.org/federal-lobbying/industries/summary?id=${this.state.selectedIndustry}`}>here.</a></p>
+  learnMore = <p>To learn more about this industry, click <a href={`https://www.opensecrets.org/federal-lobbying/industries/summary?id=${this.state.selectedIndustry}`} target="blank">here.</a></p>
 
   } else if (this.state.isLoading) {
     result = <Loader type="ThreeDots" color="#000000" height={80} width={80} />

@@ -1,15 +1,103 @@
 
+#root {
+  display: flex;
+  justify-content: center;
+  background-color: #2A2A28;
+}
 .App {
   text-align: center;
-  
+  width: 1140px;
+  margin-top: 5%;
+  font-family: 'Lato', sans-serif;
+  color: white;
+}
+
+a {
+  color: #7BB2D9;
+}
+
+.app-description p {
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+.money {
+  color: #ACC196;
 }
 
 .form-wrapper {
   display: flex;
   justify-content: center;
+  margin: .7em;
 }
 
 .dropdown-wrapper {
   margin: .5rem;
 }
 
+.dropdown-wrapper p {
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+.dropdown-wrapper select {
+  background-color: #2A2A28;
+  border-radius: .5em;
+  color: white;
+  font-size: 1.2em;
+  padding: .3em;
+}
+
+.result p {
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+.dollarAmount {
+  color: #ACC196;
+}
+
+button {
+  color: white;
+  background-color: #2A2A28;
+  font-weight: bolder;
+  font-size: 1.2em;
+  padding: .35em 1.2em;
+  border-radius: .1em;
+  border: .1em solid white;
+  transition: all 0.2s;
+}
+
+button:hover {
+  color: #2A2A28;
+  background-color: white;
+  cursor: pointer;
+}
+
+
+/* Mobile *//* Mobile *//* Mobile */
+
+@media all and (max-width: 500px) {
+  
+  html, body, #root, .App {
+    height: fit-content;
+    width: 100vw;
+  }
+
+  .app-description > p {
+    padding: .5em;
+  }
+
+  .form-wrapper {
+    flex-direction: column;
+  }
+
+  select {
+    max-width: 75vw;
+  }
+
+  button {
+    margin: 1em 0em 1em 0em; 
+  }
+  
+}

@@ -3807,6 +3807,13 @@ class App extends React.Component{
   }
 
 getIndustryContribs = () => {
+ 
+  // var elements = document.querySelectorAll(' html, body, #root, .App')
+  
+  // elements.forEach((element) => {
+  //   element.style.height = "fit-content";
+  // })
+
   const url = `https://www.opensecrets.org/api/?method=candIndByInd&cid=${this.state.selectedCandidateCode}&cycle=${this.state.selectedCycle}&ind=${this.state.selectedIndustry}&output=json&apikey=d0d4a0bf9a8a46c580d807195076a953`
 
   this.setState({ isLoading: true })
@@ -3836,6 +3843,7 @@ getIndustryContribs = () => {
       this.setState({ requestCompleted:true });
       this.setState({ isLoading: false });
     })
+    
 }
     
     
@@ -3847,11 +3855,11 @@ render() {
   let learnMore;
 
   if (!this.state.errorMessage && this.state.requestCompleted && !this.state.isLoading) {
-  result = <p>During the {this.state.displayedCycle} cycle, {this.state.selectedCandidate} received ${this.state.dollarAmount} from the {this.state.selectedIndustryName} industry</p>
-  learnMore = <p>To learn more about this industry, click <a href={`https://www.opensecrets.org/federal-lobbying/industries/summary?id=${this.state.selectedIndustry}`} target="blank">here.</a></p>
+    result = <p>During the {this.state.displayedCycle} cycle, {this.state.selectedCandidate} received <span className="dollarAmount">${this.state.dollarAmount}</span> from the {this.state.selectedIndustryName} industry</p>
+    learnMore = <p>To learn more about this industry, click <a href={`https://www.opensecrets.org/federal-lobbying/industries/summary?id=${this.state.selectedIndustry}`} target="blank">here.</a></p>
 
   } else if (this.state.isLoading) {
-    result = <Loader type="ThreeDots" color="#000000" height={80} width={80} />
+    result = <Loader type="ThreeDots" color="#FFFFFF" height={80} width={80} />
   } 
 
   else {
@@ -3864,8 +3872,8 @@ render() {
   return (
     <div className="App">
       <div className="app-description">
-        <h2>Industry Money</h2>
-        <p>Use the dropdown menus below to find how much money a Congressmember of your choice has received from different industries in a given campaign cycle. All data is pulled from Open Secrets.</p>
+        <h1>Industry <span className="money">Money</span></h1>
+        <p>Use the dropdown menus below to find how much <span className="money">money</span> a Congressmember of your choice has received from different industries in a given campaign cycle. All data is pulled from Open Secrets.</p>
       </div>
 
     <div className="form-wrapper">
@@ -3880,14 +3888,14 @@ render() {
       </div>
 
       <div className="dropdown-wrapper">
-      <p>2.Select Candidate</p>
-      <select 
-        //store the candidate selected by the user in the dropdown in the state & populate the dropdown menu with the filtered list of candidates based what state the user selected
-        onChange={(e) => this.setState({selectedCandidateCode: e.target.value})}>
-          <option>Candidate...</option>   
-        {this.state.candidates.filter((candidate) => candidate.State === this.state.selectedState).map((candidate) => 
-          <option key={candidate.CID} value={candidate.CID}>{candidate.CRPName}</option>)} 
-      </select>
+        <p>2.Select Candidate</p>
+        <select 
+          //store the candidate selected by the user in the dropdown in the state & populate the dropdown menu with the filtered list of candidates based what state the user selected
+          onChange={(e) => this.setState({selectedCandidateCode: e.target.value})}>
+            <option>Candidate...</option>   
+          {this.state.candidates.filter((candidate) => candidate.State === this.state.selectedState).map((candidate) => 
+            <option key={candidate.CID} value={candidate.CID}>{candidate.CRPName}</option>)} 
+        </select>
       </div>
 
       <div className="dropdown-wrapper">
@@ -3923,8 +3931,8 @@ render() {
     
     </div>  
     <button onClick={this.getIndustryContribs}>Get contributions</button>
-        <div>{result}</div>
-        <div>{learnMore}</div>
+        <div className="result">{result}</div>
+        <div className="result">{learnMore}</div>
         
     </div>
   );
